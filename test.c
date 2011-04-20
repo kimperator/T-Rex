@@ -8,14 +8,16 @@
 #define trex_sprintf sprintf
 #endif
 
+/* test edited by Kai Uwe Jesussek for parsing html*/
+
 int main(int argc, char* argv[])
 {
 	const TRexChar *begin,*end;
 	TRexChar sTemp[200];
 	const TRexChar *error = NULL;
-	TRex *x = trex_compile(_TREXC("(x{1,5})xx"),&error);
+	TRex *x = trex_compile(_TREXC("<a href=[\"|'](.*)[\"|']>(.*)</a>"),&error);
 	if(x) {
-		trex_sprintf(sTemp,_TREXC("xxxxxxx"));
+		trex_sprintf(sTemp,_TREXC("<html><head></head><body><a href='link.html'>link</a></body></html>"));
 		if(trex_search(x,sTemp,&begin,&end))
 		{
 			int i,n = trex_getsubexpcount(x);
