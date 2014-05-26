@@ -590,8 +590,17 @@ TRexBool trex_match(TRex* exp,const TRexChar* text)
 	exp->_eol = text + scstrlen(text);
 	exp->_currsubexp = 0;
 	res = trex_matchnode(exp,exp->_nodes,text,NULL);
-	if(res == NULL || res != exp->_eol)
+
+	#ifdef _DEBUG
+		scprintf("DEBUG trex_match: res = '%s'\n", res);
+		scprintf("DEBUG trex_match: exp->_eol = '%s'\n", exp->_eol);
+	#endif
+
+	// Fail match if trex_matchnode returns nothing
+	if (!res) {
 		return TRex_False;
+	}
+
 	return TRex_True;
 }
 
